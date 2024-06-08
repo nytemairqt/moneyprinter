@@ -46,6 +46,8 @@ def generate_audio(output_name, input_audio=None, init_noise_level=1.0):
     init_noise_level=init_noise_level
     )
 
+    output = output[:, :, :int(input_audio[0] * LENGTH)]
+
     # Rearrange audio batch to a single sequence
     output = rearrange(output, "b d n -> d (b n)")
 
@@ -59,16 +61,17 @@ if __name__ == '__main__':
     # use "sample in a dry recording studio" to have it actually be samples LOL
 
     # Input Params
-    USING_SINGLE_INPUT = False
-    USING_GLITCHIFY = True
-    PROMPT = 'electronic cinematic percussion loop glitch'
-    NOISE_STRENGTH = 50.0
-    NUM_GENERATIONS = 20 # This is also the number of input audio files if using GLITCHIFY
+    USING_SINGLE_INPUT = True
+    USING_GLITCHIFY = False
+    PROMPT = 'tape loop ambient foley field recording pad C3 vinyl'
+    NOISE_STRENGTH = 70.0
+    NUM_GENERATIONS = 1 # This is also the number of input audio files if using GLITCHIFY
+    LENGTH = 30
 
     conditioning = [{
     "prompt": PROMPT,
     "seconds_start": 0, 
-    "seconds_total": 30
+    "seconds_total": LENGTH
     }]
 
     if USING_SINGLE_INPUT:
